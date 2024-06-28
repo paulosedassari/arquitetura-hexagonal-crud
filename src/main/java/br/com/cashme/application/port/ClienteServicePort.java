@@ -1,6 +1,6 @@
-package br.com.cashme.port.inbound;
+package br.com.cashme.application.port;
 
-import br.com.cashme.adapter.dto.ClienteDto;
+import br.com.cashme.application.dto.ClienteDto;
 
 import java.util.List;
 
@@ -10,9 +10,9 @@ public interface ClienteServicePort {
 
     List<ClienteDto> buscarTodosClientes();
 
-    ClienteDto buscarCliente();
+    ClienteDto buscarCliente(String nome);
 
-    ClienteDto atualizarCliente(String nome, ClienteDto produtoDto);
+    void atualizarCliente(String nome, ClienteDto produtoDto);
 
     void deletarCliente(String nome);
 }

@@ -1,5 +1,7 @@
 package br.com.cashme.domain.model;
 
+import br.com.cashme.application.dto.EnderecoDto;
+
 public class Endereco {
 
     private String rua;
@@ -8,6 +10,15 @@ public class Endereco {
     private String cep;
     private String cidade;
     private String estado;
+
+    public Endereco(EnderecoDto enderecoDto) {
+        this.rua = enderecoDto.getRua();
+        this.numero = enderecoDto.getNumero();
+        this.bairro = enderecoDto.getBairro();
+        this.cep = enderecoDto.getCep();
+        this.cidade = enderecoDto.getCidade();
+        this.estado = enderecoDto.getEstado();
+    }
 
     public String getRua() {
         return rua;
