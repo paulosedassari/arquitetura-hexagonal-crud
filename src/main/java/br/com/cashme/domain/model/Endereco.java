@@ -1,5 +1,6 @@
 package br.com.cashme.domain.model;
 
+import br.com.cashme.adapter.outbound.entity.EnderecoEntity;
 import br.com.cashme.application.dto.EnderecoDto;
 
 public class Endereco {
@@ -18,6 +19,15 @@ public class Endereco {
         this.cep = enderecoDto.getCep();
         this.cidade = enderecoDto.getCidade();
         this.estado = enderecoDto.getEstado();
+    }
+
+    public Endereco(EnderecoEntity enderecoEntity) {
+        this.rua = enderecoEntity.getRua();
+        this.numero = enderecoEntity.getNumero();
+        this.bairro = enderecoEntity.getBairro();
+        this.cep = enderecoEntity.getCep();
+        this.cidade = enderecoEntity.getCidade();
+        this.estado = enderecoEntity.getEstado();
     }
 
     public String getRua() {

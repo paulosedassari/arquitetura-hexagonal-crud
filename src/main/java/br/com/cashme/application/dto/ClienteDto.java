@@ -2,12 +2,14 @@ package br.com.cashme.application.dto;
 
 import br.com.cashme.domain.model.Cliente;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class ClienteDto implements Serializable {
 
     private Long id;

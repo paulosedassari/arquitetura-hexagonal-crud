@@ -39,7 +39,7 @@ public class ClienteService implements ClienteServicePort {
     @Override
     public void atualizarCliente(String nome, ClienteDto clienteDto) {
         verificarExistenciaDoCliente(nome);
-        clienteRepositoryPort.atualizar(nome, new Cliente(clienteDto));
+        clienteRepositoryPort.atualizar(new Cliente(clienteDto));
     }
 
     @Override

@@ -12,7 +12,7 @@ public interface ClienteRepositoryPort {
 
     Cliente buscar(String nome);
 
-    Cliente atualizar(String nome, Cliente cliente);
+    void atualizar(Cliente cliente);
 
     void deletar(String nome);
 }
