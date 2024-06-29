@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
@@ -20,21 +21,26 @@ public class EnderecoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     @Column
     private String rua;
 
     @Column
     private int numero;
 
+    @NotBlank
     @Column
     private String bairro;
 
+    @NotBlank
     @Column
     private String cep;
 
+    @NotBlank
     @Column
     private String cidade;
 
+    @NotBlank
     @Column
     private String estado;
 

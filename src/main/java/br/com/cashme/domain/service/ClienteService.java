@@ -4,7 +4,7 @@ import br.com.cashme.application.dto.ClienteDto;
 import br.com.cashme.application.port.ClienteRepositoryPort;
 import br.com.cashme.application.port.ClienteServicePort;
 import br.com.cashme.common.Constants;
-import br.com.cashme.domain.exception.CashMeException;
+import br.com.cashme.common.exception.CashMeException;
 import br.com.cashme.domain.model.Cliente;
 
 import java.util.List;

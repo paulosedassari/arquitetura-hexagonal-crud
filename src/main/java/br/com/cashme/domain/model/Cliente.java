@@ -15,6 +15,7 @@ public class Cliente {
     }
 
     public Cliente(ClienteEntity clienteEntity) {
+        this.id = clienteEntity.getId();
         this.nome = clienteEntity.getNome();
         this.endereco = new Endereco(clienteEntity.getEndereco());
     }
