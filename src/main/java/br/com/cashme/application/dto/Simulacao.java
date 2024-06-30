@@ -1,4 +1,4 @@
-package br.com.cashme.adapter.dto;
+package br.com.cashme.application.dto;
 
 import br.com.cashme.domain.model.Cliente;
 import lombok.Getter;
