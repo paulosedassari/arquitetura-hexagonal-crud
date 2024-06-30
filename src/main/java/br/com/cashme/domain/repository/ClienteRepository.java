@@ -20,24 +20,23 @@ public class ClienteRepository implements ClienteRepositoryPort {
     }
 
     @Override
-    public void salvar(Cliente cliente) {
-        ClienteEntity clienteEntity = clienteMapper.toEntity(cliente);
-        clienteRepositoryJpa.save(clienteEntity);
+    public Cliente salvar(Cliente cliente) {
+        ClienteEntity clienteCriado = clienteRepositoryJpa.save(clienteMapper.toEntity(cliente));
+        return clienteMapper.toModel(clienteCriado);
     }
 
     @Override
     public List<Cliente> buscarTodos() {
         List<ClienteEntity> clientesEntity = clienteRepositoryJpa.findAll();
-        return clientesEntity.stream().map(Cliente::new).toList();
+        return clientesEntity.stream().map(clienteMapper::toModel).toList();
     }
 
     @Override
     public Cliente buscar(String nome) {
         ClienteEntity clienteEntity = clienteRepositoryJpa.findByNome(nome);
-
         if (Objects.isNull(clienteEntity)) return new Cliente();
 
-        return new Cliente(clienteEntity);
+        return clienteMapper.toModel(clienteEntity);
     }
 
     @Override

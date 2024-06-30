@@ -6,7 +6,9 @@ import br.com.cashme.application.port.ClienteServicePort;
 import br.com.cashme.common.ClienteMapper;
 import br.com.cashme.domain.repository.ClienteRepository;
 import br.com.cashme.domain.service.ClienteService;
+import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
@@ -14,8 +16,8 @@ import org.springframework.stereotype.Component;
 public class ConfiguracaoBean {
 
     @Bean
-    ClienteServicePort clienteService(ClienteRepositoryPort clienteRepositoryPort) {
-        return new ClienteService(clienteRepositoryPort);
+    ClienteServicePort clienteService(ClienteRepositoryPort clienteRepositoryPort, ClienteMapper clienteMapper) {
+        return new ClienteService(clienteRepositoryPort, clienteMapper);
     }
 
     @Bean
@@ -25,6 +27,10 @@ public class ConfiguracaoBean {
 
     @Bean
     public ModelMapper modelMapper() {
-        return new ModelMapper();
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.STRICT)
+                .setPropertyCondition(Conditions.isNotNull());
+        return modelMapper;
     }
 }
