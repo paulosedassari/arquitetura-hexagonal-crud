@@ -1,4 +1,4 @@
-package br.com.cashme.common;
+package br.com.cashme.common.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
