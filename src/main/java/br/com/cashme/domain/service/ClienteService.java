@@ -1,8 +1,8 @@
 package br.com.cashme.domain.service;
 
-import br.com.cashme.application.dto.ClienteDto;
 import br.com.cashme.application.port.ClienteRepositoryPort;
 import br.com.cashme.application.port.ClienteServicePort;
+import br.com.cashme.common.ClienteMapper;
 import br.com.cashme.common.Constants;
 import br.com.cashme.common.exception.RegistroNaoEncontradoException;
 import br.com.cashme.domain.model.Cliente;
@@ -13,39 +13,34 @@ import java.util.Objects;
 public class ClienteService implements ClienteServicePort {
 
     private final ClienteRepositoryPort clienteRepositoryPort;
+    private final ClienteMapper clienteMapper;
 
-    public ClienteService(ClienteRepositoryPort clienteRepositoryPort) {
+    public ClienteService(ClienteRepositoryPort clienteRepositoryPort, ClienteMapper clienteMapper) {
         this.clienteRepositoryPort = clienteRepositoryPort;
+        this.clienteMapper = clienteMapper;
     }
 
     @Override
-    public void criarCliente(Cliente cliente) {
-        clienteRepositoryPort.salvar(cliente);
+    public Cliente criarCliente(Cliente cliente) {
+        return clienteRepositoryPort.salvar(cliente);
     }
 
     @Override
-    public List<ClienteDto> buscarTodosClientes() {
-        List<Cliente> clientes = clienteRepositoryPort.buscarTodos();
-        return clientes.stream().map(ClienteDto::new).toList();
+    public List<Cliente> buscarTodosClientes() {
+        return clienteRepositoryPort.buscarTodos();
     }
 
     @Override
-    public ClienteDto buscarCliente(String nome) {
-        Cliente cliente = clienteRepositoryPort.buscar(nome);
-        return new ClienteDto(cliente);
+    public Cliente buscarCliente(String nome) {
+        return clienteRepositoryPort.buscar(nome);
     }
 
     @Override
-    public void atualizarCliente(String nome, Cliente alteracoesCliente) {
+    public Cliente atualizarCliente(String nome, Cliente alteracoesCliente) {
         Cliente cliente = verificarExistenciaDoCliente(nome);
-        cliente.setNome(alteracoesCliente.getNome());
-        cliente.getEndereco().setRua(alteracoesCliente.getEndereco().getRua());
-        cliente.getEndereco().setNumero(alteracoesCliente.getEndereco().getNumero());
-        cliente.getEndereco().setCep(alteracoesCliente.getEndereco().getCep());
-        cliente.getEndereco().setBairro(alteracoesCliente.getEndereco().getBairro());
-        cliente.getEndereco().setCidade(alteracoesCliente.getEndereco().getCidade());
-        cliente.getEndereco().setEstado(alteracoesCliente.getEndereco().getEstado());
-        clienteRepositoryPort.salvar(cliente);
+        clienteMapper.updateCliente(alteracoesCliente, cliente);
+
+        return clienteRepositoryPort.salvar(cliente);
     }
 
     @Override

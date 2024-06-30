@@ -1,19 +1,18 @@
 package br.com.cashme.application.port;
 
-import br.com.cashme.application.dto.ClienteDto;
 import br.com.cashme.domain.model.Cliente;
 
 import java.util.List;
 
 public interface ClienteServicePort {
 
-    void criarCliente(Cliente cliente);
+    Cliente criarCliente(Cliente cliente);
 
-    List<ClienteDto> buscarTodosClientes();
+    List<Cliente> buscarTodosClientes();
 
-    ClienteDto buscarCliente(String nome);
+    Cliente buscarCliente(String nome);
 
-    void atualizarCliente(String nome, Cliente cliente);
+    Cliente atualizarCliente(String nome, Cliente cliente);
 
     void deletarCliente(String nome);
 }

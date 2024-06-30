@@ -15,6 +15,10 @@ public class ClienteMapper {
         this.modelMapper = modelMapper;
     }
 
+    public ClienteDto toDto(Cliente cliente) {
+        return modelMapper.map(cliente, ClienteDto.class);
+    }
+
     public ClienteEntity toEntity(Cliente cliente) {
         return modelMapper.map(cliente, ClienteEntity.class);
     }
@@ -25,5 +29,9 @@ public class ClienteMapper {
 
     public Cliente toModel(ClienteEntity clienteEntity) {
         return modelMapper.map(clienteEntity, Cliente.class);
+    }
+
+    public void updateCliente(Cliente clienteAlteracoes, Cliente clienteExistente) {
+        modelMapper.map(clienteAlteracoes, clienteExistente);
     }
 }

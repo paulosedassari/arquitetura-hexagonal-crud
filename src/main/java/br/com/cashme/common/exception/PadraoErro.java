@@ -1,5 +1,6 @@
 package br.com.cashme.common.exception;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +13,14 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class PadraoErro implements Serializable {
 
-    private LocalDateTime dataHora;
+    @JsonProperty("data_hora")
+    private String dataHora;
+
+    @JsonProperty("mensagem_curta")
+    private String msgCurta;
+
+    @JsonProperty("mensagem_detalhada")
     private String detalhes;
+
     private String endpoint;
 }
