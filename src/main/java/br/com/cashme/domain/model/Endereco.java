@@ -12,6 +12,10 @@ public class Endereco {
     private String cidade;
     private String estado;
 
+    public Endereco() {
+
+    }
+
     public Endereco(EnderecoDto enderecoDto) {
         this.rua = enderecoDto.getRua();
         this.numero = enderecoDto.getNumero();

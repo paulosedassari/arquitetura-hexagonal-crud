@@ -2,11 +2,13 @@ package br.com.cashme.adapter.inbound;
 
 import br.com.cashme.application.dto.ClienteDto;
 import br.com.cashme.application.port.ClienteServicePort;
-import br.com.cashme.common.exception.CashMeException;
+import br.com.cashme.common.ClienteMapper;
+import br.com.cashme.domain.model.Cliente;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
@@ -16,55 +18,46 @@ import java.util.List;
 public class ClienteController {
 
     private final ClienteServicePort clienteServicePort;
+    private final ClienteMapper clienteMapper;
 
-    public ClienteController(ClienteServicePort clienteServicePort) {
+    public ClienteController(ClienteServicePort clienteServicePort, ClienteMapper clienteMapper) {
         this.clienteServicePort = clienteServicePort;
+        this.clienteMapper = clienteMapper;
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    @Transactional
     public void criarCliente(@RequestBody @Valid ClienteDto clienteDto) {
-        try {
-            clienteServicePort.criarCliente(clienteDto);
-        } catch (Exception e) {
-            throw new CashMeException(e.getMessage(), e);
-        }
+        Cliente cliente = clienteMapper.toModel(clienteDto);
+        clienteServicePort.criarCliente(cliente);
     }
 
     @GetMapping
+    @Transactional
     public ResponseEntity<List<ClienteDto>> buscarTodos() {
-        try {
-            List<ClienteDto> todosOsClientes = clienteServicePort.buscarTodosClientes();
-            return ResponseEntity.status(HttpStatus.OK).body(todosOsClientes);
-        } catch (Exception e) {
-            throw new CashMeException(e.getMessage(), e);
-        }
+        List<ClienteDto> todosOsClientes = clienteServicePort.buscarTodosClientes();
+        return ResponseEntity.status(HttpStatus.OK).body(todosOsClientes);
     }
 
     @GetMapping("{nome}")
+    @Transactional
     public ResponseEntity<ClienteDto> buscarCliente(@PathVariable("nome") @NotBlank String nome) {
-        try {
-            ClienteDto cliente = clienteServicePort.buscarCliente(nome);
-            return ResponseEntity.status(HttpStatus.OK).body(cliente);
-        } catch (Exception e) {
-            throw new CashMeException(e.getMessage(), e);
-        }
+        ClienteDto cliente = clienteServicePort.buscarCliente(nome);
+        return ResponseEntity.status(HttpStatus.OK).body(cliente);
     }
 
     @PutMapping("{nome}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Transactional
     public void atualizarCliente(@PathVariable("nome") @NotBlank String nome, @RequestBody @Valid ClienteDto clienteDto) {
-        try {
-            clienteServicePort.atualizarCliente(nome, clienteDto);
-        } catch (Exception e) {
-            throw new CashMeException(e.getMessage(), e);
-        }
+        Cliente cliente = clienteMapper.toModel(clienteDto);
+        clienteServicePort.atualizarCliente(nome, cliente);
     }
 
     @DeleteMapping("{nome}")
+    @Transactional
     public void deletarCliente(@PathVariable("nome") @NotBlank String nome) {
-        try {
-            clienteServicePort.deletarCliente(nome);
-        } catch (Exception e) {
-            throw new CashMeException(e.getMessage(), e);
-        }
+        clienteServicePort.deletarCliente(nome);
     }
 }

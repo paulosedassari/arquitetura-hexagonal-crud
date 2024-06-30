@@ -4,7 +4,7 @@ import br.com.cashme.application.dto.ClienteDto;
 import br.com.cashme.application.port.ClienteRepositoryPort;
 import br.com.cashme.application.port.ClienteServicePort;
 import br.com.cashme.common.Constants;
-import br.com.cashme.common.exception.CashMeException;
+import br.com.cashme.common.exception.RegistroNaoEncontradoException;
 import br.com.cashme.domain.model.Cliente;
 
 import java.util.List;
@@ -19,8 +19,7 @@ public class ClienteService implements ClienteServicePort {
     }
 
     @Override
-    public void criarCliente(ClienteDto produtoDto) {
-        Cliente cliente = new Cliente(produtoDto);
+    public void criarCliente(Cliente cliente) {
         clienteRepositoryPort.salvar(cliente);
     }
 
@@ -37,9 +36,16 @@ public class ClienteService implements ClienteServicePort {
     }
 
     @Override
-    public void atualizarCliente(String nome, ClienteDto clienteDto) {
-        verificarExistenciaDoCliente(nome);
-        clienteRepositoryPort.atualizar(new Cliente(clienteDto));
+    public void atualizarCliente(String nome, Cliente alteracoesCliente) {
+        Cliente cliente = verificarExistenciaDoCliente(nome);
+        cliente.setNome(alteracoesCliente.getNome());
+        cliente.getEndereco().setRua(alteracoesCliente.getEndereco().getRua());
+        cliente.getEndereco().setNumero(alteracoesCliente.getEndereco().getNumero());
+        cliente.getEndereco().setCep(alteracoesCliente.getEndereco().getCep());
+        cliente.getEndereco().setBairro(alteracoesCliente.getEndereco().getBairro());
+        cliente.getEndereco().setCidade(alteracoesCliente.getEndereco().getCidade());
+        cliente.getEndereco().setEstado(alteracoesCliente.getEndereco().getEstado());
+        clienteRepositoryPort.salvar(cliente);
     }
 
     @Override
@@ -48,8 +54,12 @@ public class ClienteService implements ClienteServicePort {
         clienteRepositoryPort.deletar(nome);
     }
 
-    private void verificarExistenciaDoCliente(String nome) {
+    private Cliente verificarExistenciaDoCliente(String nome) {
         Cliente cliente = clienteRepositoryPort.buscar(nome);
-        if (Objects.isNull(cliente)) throw new CashMeException(Constants.CLIENTE_NAO_ENCONTRADO_PARA_REALIZAR_A_OPERACAO);
+
+        if (Objects.isNull(cliente.getId()))
+            throw new RegistroNaoEncontradoException(Constants.CLIENTE_NAO_ENCONTRADO_PARA_REALIZAR_A_OPERACAO);
+
+        return cliente;
     }
 }

@@ -12,7 +12,5 @@ public interface ClienteRepositoryPort {
 
     Cliente buscar(String nome);
 
-    void atualizar(Cliente cliente);
-
     void deletar(String nome);
 }
