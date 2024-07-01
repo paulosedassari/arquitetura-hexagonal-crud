@@ -11,7 +11,7 @@ public class Simulacao {
     private BigDecimal valorSolicitado;
     private BigDecimal valorGarantia;
     private int qtdMesesFinanciamento;
-    private int taxaJurosMensal;
+    private BigDecimal taxaJurosMensal;
 
     public Long getId() {
         return id;
@@ -61,11 +61,11 @@ public class Simulacao {
         this.qtdMesesFinanciamento = qtdMesesFinanciamento;
     }
 
-    public int getTaxaJurosMensal() {
+    public BigDecimal getTaxaJurosMensal() {
         return taxaJurosMensal;
     }
 
-    public void setTaxaJurosMensal(int taxaJurosMensal) {
+    public void setTaxaJurosMensal(BigDecimal taxaJurosMensal) {
         this.taxaJurosMensal = taxaJurosMensal;
     }
 }

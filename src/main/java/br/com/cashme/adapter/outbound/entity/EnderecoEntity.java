@@ -44,6 +44,9 @@ public class EnderecoEntity {
     @Column
     private String estado;
 
+    @OneToOne(mappedBy = "endereco")
+    private ClienteEntity cliente;
+
     public EnderecoEntity(Endereco endereco) {
         this.rua = endereco.getRua();
         this.numero = endereco.getNumero();
