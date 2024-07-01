@@ -10,7 +10,7 @@ public interface ClienteServicePort {
 
     List<Cliente> buscarTodosClientes();
 
-    Cliente buscarCliente(String nome);
+    List<Cliente> buscarCliente(String nome);
 
     Cliente atualizarCliente(String nome, Cliente cliente);
 

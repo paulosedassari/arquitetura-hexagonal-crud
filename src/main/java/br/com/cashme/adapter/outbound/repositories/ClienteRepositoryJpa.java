@@ -4,10 +4,12 @@ import br.com.cashme.adapter.outbound.entity.ClienteEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ClienteRepositoryJpa extends JpaRepository<ClienteEntity, Long> {
 
-    ClienteEntity findByNome(String nome);
+    List<ClienteEntity> findByNome(String nome);
 
     void deleteByNome(String nome);
 }
