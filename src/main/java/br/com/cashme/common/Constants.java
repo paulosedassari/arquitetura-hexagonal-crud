@@ -7,7 +7,7 @@ public class Constants {
     public static final String CLIENTE_EXCLUIDO_COM_SUCESSO = "Cliente %s excluído com sucesso no dia %s.";
     public static final String CLIENTE_CRIADO_COM_SUCESSO = "Cliente %s criado com sucesso  no dia %s.";
     public static final String TODOS_CLIENTES_RETORNADOS_COM_SUCESSO_E_TOTAL = "Todos os clientes retornados com sucesso. Total: %d";
-    public static final String CLIENTE_ENCONTRADO_NA_BASE_DE_DADOS = "Cliente %s encontrado na base de dados.";
+    public static final String CLIENTE_ENCONTRADO_NA_BASE_DE_DADOS = "Cliente(s) encontrado(s) na base de dados.";
     public static final String INFORMACOES_DO_CLIENTE_ATUALIZADAS_COM_SUCESSO = "Informações do cliente %s atualizadas com sucesso no dia %s.";
 
     public static final DateTimeFormatter FORMATTER_DD_MM_YYYY_HH_MM_SS = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");

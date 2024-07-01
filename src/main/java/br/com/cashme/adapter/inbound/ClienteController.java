@@ -1,5 +1,6 @@
 package br.com.cashme.adapter.inbound;
 
+import br.com.cashme.adapter.ClienteSwagger;
 import br.com.cashme.application.dto.ClienteDto;
 import br.com.cashme.application.port.ClienteServicePort;
 import br.com.cashme.common.ClienteMapper;
@@ -10,12 +11,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,7 +28,7 @@ import static java.lang.String.format;
 
 @RestController
 @RequestMapping("clientes")
-public class ClienteController {
+public class ClienteController implements ClienteSwagger {
 
     private final Logger logger = LoggerFactory.getLogger(ClienteController.class);
 
@@ -36,7 +41,6 @@ public class ClienteController {
     }
 
     @Transactional
-    @PostMapping
     public ResponseEntity<ClienteDto> criarCliente(@RequestBody @Valid ClienteDto clienteDto) {
         Cliente clienteCriado = clienteServicePort.criarCliente(clienteMapper.toModel(clienteDto));
         if (logger.isInfoEnabled())
@@ -45,7 +49,6 @@ public class ClienteController {
     }
 
     @Transactional
-    @GetMapping
     public ResponseEntity<List<ClienteDto>> buscarTodos() {
         List<Cliente> todosOsClientes = clienteServicePort.buscarTodosClientes();
         if (logger.isInfoEnabled())
@@ -54,17 +57,18 @@ public class ClienteController {
     }
 
     @Transactional
-    @GetMapping("{nome}")
-    public ResponseEntity<ClienteDto> buscarCliente(@PathVariable("nome") @NotBlank String nome) {
-        Cliente cliente = clienteServicePort.buscarCliente(nome);
-        if (Objects.isNull(cliente.getId())) return ResponseEntity.status(HttpStatus.OK).build();
+    public ResponseEntity<List<ClienteDto>> buscarCliente(@PathVariable("nome") @NotBlank String nome) {
+        List<Cliente> clientes = clienteServicePort.buscarCliente(nome);
+
+        if (clientes.isEmpty()) return ResponseEntity.status(HttpStatus.OK).body(new ArrayList<>());
+
         if (logger.isInfoEnabled())
-            logger.info(format(Constants.CLIENTE_ENCONTRADO_NA_BASE_DE_DADOS, cliente.getNome()));
-        return ResponseEntity.status(HttpStatus.OK).body(clienteMapper.toDto(cliente));
+            logger.info(Constants.CLIENTE_ENCONTRADO_NA_BASE_DE_DADOS);
+
+        return ResponseEntity.status(HttpStatus.OK).body(clientes.stream().map(clienteMapper::toDto).toList());
     }
 
     @Transactional
-    @PutMapping("{nome}")
     public ResponseEntity<ClienteDto> atualizarCliente(@PathVariable("nome") @NotBlank String nome, @RequestBody @Valid ClienteDto clienteDto) {
         Cliente clienteAtualizado = clienteServicePort.atualizarCliente(nome, clienteMapper.toModel(clienteDto));
         if (logger.isInfoEnabled())
@@ -73,7 +77,6 @@ public class ClienteController {
     }
 
     @Transactional
-    @DeleteMapping("{nome}")
     public void deletarCliente(@PathVariable("nome") @NotBlank String nome) {
         clienteServicePort.deletarCliente(nome);
         if (logger.isInfoEnabled())

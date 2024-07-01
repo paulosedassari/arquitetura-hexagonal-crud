@@ -10,7 +10,7 @@ public interface ClienteRepositoryPort {
 
     List<Cliente> buscarTodos();
 
-    Cliente buscar(String nome);
+    List<Cliente> buscar(String nome);
 
     void deletar(String nome);
 }

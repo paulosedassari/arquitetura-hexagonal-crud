@@ -6,6 +6,7 @@ import br.com.cashme.application.port.ClienteRepositoryPort;
 import br.com.cashme.common.ClienteMapper;
 import br.com.cashme.domain.model.Cliente;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,11 +33,11 @@ public class ClienteRepository implements ClienteRepositoryPort {
     }
 
     @Override
-    public Cliente buscar(String nome) {
-        ClienteEntity clienteEntity = clienteRepositoryJpa.findByNome(nome);
-        if (Objects.isNull(clienteEntity)) return new Cliente();
+    public List<Cliente> buscar(String nome) {
+        List<ClienteEntity> clientesEntity = clienteRepositoryJpa.findByNome(nome);
+        if (Objects.isNull(clientesEntity)) return new ArrayList<>();
 
-        return clienteMapper.toModel(clienteEntity);
+        return clientesEntity.stream().map(clienteMapper::toModel).toList();
     }
 
     @Override
