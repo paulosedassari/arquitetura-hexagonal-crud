@@ -38,6 +38,7 @@ public class ClienteService implements ClienteServicePort {
     @Override
     public Cliente atualizarCliente(String nome, Cliente alteracoesCliente) {
         List<Cliente> clientes = verificarExistenciaDoCliente(nome);
+
         if (clientes.size() > 1) throw new CashMeException("Não foi possível realizar a atualização. Existe mais de um cliente com este nome.");
         clienteMapper.updateCliente(alteracoesCliente, clientes.get(0));
 
