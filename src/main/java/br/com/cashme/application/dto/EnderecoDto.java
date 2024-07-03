@@ -18,13 +18,4 @@ public class EnderecoDto implements Serializable {
     private String cep;
     private String cidade;
     private String estado;
-
-    public EnderecoDto(Endereco endereco) {
-        this.rua = endereco.getRua();
-        this.numero = endereco.getNumero();
-        this.bairro = endereco.getBairro();
-        this.cep = endereco.getCep();
-        this.cidade = endereco.getCidade();
-        this.estado = endereco.getEstado();
-    }
 }
