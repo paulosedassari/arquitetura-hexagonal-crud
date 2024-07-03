@@ -48,11 +48,9 @@ class ClienteRepositoryTest {
 
     @Test
     void testReturnsListOfClienteObjectsWhenMultipleClienteentityRecordsExist() {
-        Cliente cliente = getCliente();
-
         List<ClienteEntity> clienteEntities = List.of(
-                new ClienteEntity(cliente),
-                new ClienteEntity(cliente)
+                new ClienteEntity(),
+                new ClienteEntity()
         );
 
         when(clienteRepositoryJpa.findAll()).thenReturn(clienteEntities);
