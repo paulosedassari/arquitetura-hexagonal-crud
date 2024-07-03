@@ -32,9 +32,4 @@ public class ClienteEntity {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
     private List<SimulacaoEntity> simulacoes;
-
-    public ClienteEntity(Cliente cliente) {
-        this.nome = cliente.getNome();
-        this.endereco = new EnderecoEntity(cliente.getEndereco());
-    }
 }

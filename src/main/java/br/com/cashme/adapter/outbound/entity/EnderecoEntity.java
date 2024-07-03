@@ -43,13 +43,4 @@ public class EnderecoEntity {
     @NotBlank
     @Column
     private String estado;
-
-    public EnderecoEntity(Endereco endereco) {
-        this.rua = endereco.getRua();
-        this.numero = endereco.getNumero();
-        this.bairro = endereco.getBairro();
-        this.cep = endereco.getCep();
-        this.cidade = endereco.getCidade();
-        this.estado = endereco.getEstado();
-    }
 }
